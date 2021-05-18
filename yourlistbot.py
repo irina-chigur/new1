@@ -20,6 +20,7 @@ a.close()
 @bot.message_handler(commands=['start'])
 def start(message):
     global my_list
+    print(message.from_user.id)
     if message.from_user.id not in my_list:
         my_list[message.from_user.id] = []
         my_description_list[message.from_user.id] = []
