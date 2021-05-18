@@ -1,5 +1,6 @@
 import telebot
 from telebot import types
+import json
 bot = telebot.TeleBot('1650807306:AAGx6OJGgQm889ZETa4GgS6svdCfUATyg_M')
 my_list = dict()
 my_description_list = dict()
@@ -7,10 +8,8 @@ my_description_list = dict()
 
 a = open('data.txt', 'r')
 for lines in a:
-    x, y = lines.strip().split(': ')
-    x = int(x)
-    y, z = y.split(' (')
-    z = z[:-1]
+    k = json.loads(lines.strip())
+    x, y, z = k[0], k[1], k[2]
     if x in my_list:
         my_list[x].append(y)
         my_description_list[x].append(z)
@@ -77,6 +76,7 @@ def get_li(message):
     li = str(len(my_list[message.from_user.id]) + 1) + '. ' + message.text
     my_list[message.from_user.id].append(li)
     bot.send_message(message.from_user.id, 'Write a description of your task!')
+    print('Write a description of your task!')
     bot.register_next_step_handler(message, get_de)
 
 
@@ -164,7 +164,8 @@ def w(d):
     b = open('data.txt', 'w')
     for x, y in my_list.items():
         for i in range(len(y)):
-            b.write('{0}: {1}, ({2})\n'.format(x, y[i], my_description_list[x][i]))
+            k = [x, y[i], my_description_list[x][i]]
+            b.write(json.dumps(k))
     b.close()
 
 
