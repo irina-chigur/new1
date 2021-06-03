@@ -20,7 +20,7 @@ a.close()
 @bot.message_handler(commands=['start'])
 def start(message):
     global my_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     if message.from_user.id not in my_list:
         my_list[message.from_user.id] = []
         my_description_list[message.from_user.id] = []
@@ -41,7 +41,7 @@ def start(message):
 def mess(message):
     global my_list
     global my_description_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     get_message_bot = message.text.strip().lower()
     if get_message_bot == "add":
         bot.send_message(message.from_user.id, "Write your task!")
@@ -75,7 +75,7 @@ def mess(message):
 
 def get_li(message):
     global my_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     li = str(len(my_list[message.from_user.id]) + 1) + '. ' + message.text
     my_list[message.from_user.id].append(li)
     bot.send_message(message.from_user.id, 'Write a description of your task!')
@@ -86,7 +86,7 @@ def get_li(message):
 def get_de(message):
     global my_list
     global my_description_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     de = message.text
     my_description_list[message.from_user.id].append(de)
     bot.send_message(message.from_user.id, "\n".join(my_list[message.from_user.id]))
@@ -96,7 +96,7 @@ def get_de(message):
 def del_task(message):
     global my_list
     global my_description_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     li = message.text.strip().lower()
     for i in range(my_list[message.from_user.id].index(li) + 1, len(my_list[message.from_user.id])):
         x = my_list[message.from_user.id][i]
@@ -126,7 +126,7 @@ def del_task(message):
 def show_de(message):
     global my_list
     global my_description_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     s = message.text.strip().lower()
     ind = my_list[message.from_user.id].index(s)
     bot.send_message(message.from_user.id, my_description_list[message.from_user.id][ind])
@@ -142,7 +142,7 @@ def show_de(message):
 def clear_list(message):
     global my_list
     global my_description_list
-    print(message.from_user.id)
+    print(message.text.strip().lower())
     ans = message.text.strip().lower()
     if ans == 'yes':
         my_list[message.from_user.id] = []
