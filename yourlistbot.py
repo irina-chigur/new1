@@ -41,6 +41,7 @@ def start(message):
 def mess(message):
     global my_list
     global my_description_list
+    print(message.from_user.id)
     get_message_bot = message.text.strip().lower()
     if get_message_bot == "add":
         bot.send_message(message.from_user.id, "Write your task!")
